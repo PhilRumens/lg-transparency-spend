@@ -241,6 +241,7 @@ function layout_foot(bool $show_disclaimer = false): void { ?>
     <?php if ($show_disclaimer): ?>
     <div style="margin-top:3rem;padding:1rem 0;border-top:1px solid #b1b4b6">
       <p class="govuk-body-s" style="color:#505a5f">The data presented is compiled from historical expenditure and contract records obtained from contract registers, local and regional authority websites, and information provided in response to requests made to individual local authorities. It is intended for indicative purposes only and should not be regarded as authoritative. For the most accurate and up-to-date information, always refer to the relevant organisation's official website.</p>
+      <p class="govuk-body-s" style="color:#505a5f">This dashboard is open source. View the source code, database schema and importer on <a class="govuk-link" href="https://github.com/PhilRumens/lg-transparency-spend">GitHub</a>.</p>
     </div>
     <?php endif; ?>
     </main>
