@@ -248,8 +248,10 @@ function layout_foot(bool $show_disclaimer = false): void { ?>
   </div>
 
 
-  <script src="/contracts/assets/js/govuk-frontend.min.js"></script>
-  <script>window.GOVUKFrontend.initAll();</script>
+  <script type="module">
+    import { initAll } from '/contracts/assets/js/govuk-frontend.min.js';
+    initAll();
+  </script>
   <script>
     // Toggle expand/collapse for layers and vendor cards
     document.addEventListener('click', function(e) {
