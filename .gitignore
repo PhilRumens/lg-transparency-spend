@@ -1,0 +1,36 @@
+# === Secrets / local config — NEVER commit ===
+contracts/config.local.php
+config.local.php
+.env
+*.creds
+.email_creds
+
+# === Harvested data — never commit (see README: fetched by the importer) ===
+data/
+files/
+historical_data/
+local_files/
+contracts/data/
+contracts/files/
+*.csv
+*.xlsx
+*.xls
+
+# === Backups / scratch ===
+*.bak
+*.bak_*
+*.bak-*
+*~
+claude_memory/
+
+# === Dependencies / build ===
+vendor/
+node_modules/
+
+# === OS / editor cruft ===
+.DS_Store
+.idea/
+.vscode/
+
+# === Internal build/planning notes — not part of the distributable ===
+_internal/
