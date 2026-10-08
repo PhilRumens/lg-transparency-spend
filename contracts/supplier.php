@@ -369,8 +369,21 @@ $trend_stmt = $pdo->prepare("
     GROUP BY period ORDER BY period
 ");
 $trend_stmt->execute([$search_name]);
+$raw_trend = [];
+foreach ($trend_stmt->fetchAll() as $r) $raw_trend[$r['period']] = (float)$r['total'];
+// Anchor the monthly axis at the FY2022/23 start (Apr 2022): drop stray pre-era months and
+// zero-fill gaps so the axis is continuous and the April year-labels line up across suppliers.
 $trend = [];
-foreach ($trend_stmt->fetchAll() as $r) $trend[$r['period']] = (float)$r['total'];
+if ($raw_trend) {
+    $end = max(array_keys($raw_trend));
+    $cur = '2022-04';
+    while ($cur <= $end) {
+        $trend[$cur] = $raw_trend[$cur] ?? 0.0;
+        $y = (int)substr($cur, 0, 4); $m = (int)substr($cur, 5, 2);
+        if ($m == 12) { $y++; $m = 1; } else { $m++; }
+        $cur = sprintf('%04d-%02d', $y, $m);
+    }
+}
 
 // ── Render ───────────────────────────────────────────────────────────────
 layout_head($display_name . ' – Supplier Overview');
@@ -521,7 +534,7 @@ $y_mid = $y_mid_val >= 1e6 ? '£' . number_format($y_mid_val / 1e6, 1) . 'M' : (
         elseif (isset($mo_labels[$mo])) { $lbl = $mo_labels[$mo]; }
         else { $lbl = ''; }
     ?>
-    <div style="flex:1;text-align:center;min-width:3px;overflow:hidden;font-size:0.6rem"><?= $lbl ?></div>
+    <div style="flex:1;text-align:center;min-width:3px;white-space:nowrap;font-size:0.6rem"><?= $lbl ?></div>
     <?php $last_year = $yr; endforeach; ?>
   </div>
 </div>
